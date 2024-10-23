@@ -140,8 +140,9 @@ function addInfoDiv(){
 function removeInfoDiv(){
 	var floatingDiv = document.getElementById(ballId);
 	if (floatingDiv) {  
-	    floatingDiv.parentNode.removeChild(ballId);  
+	    floatingDiv.parentNode.removeChild(floatingDiv);  
 	} 
+	closeFetchNumber();
 }
 
 function judgeIfCheckGetInfo(isCheck){
@@ -164,10 +165,11 @@ init()
 
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	const {type, isCheck} = request;
 	if(type == 1){
-		judgeIfCheck(request.isCheck)
+		judgeIfCheck(isCheck)
 	}else if(type == 2){
-		judgeIfCheckGetInfo(request.isCheck)
+		judgeIfCheckGetInfo(isCheck)
 	}
 	sendResponse({
 		fromcontent: "This message is from content.js"
